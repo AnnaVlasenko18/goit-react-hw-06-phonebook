@@ -8,44 +8,47 @@ import {
   FormContact,
   AddContact,
 } from './ContactForm.styled';
+import { useDispatch } from 'react-redux';
+import { onAdd } from '../../redux/contactsSlice';
 
 const phoneRegExp = /^(\+?\d+)?\s*(\(\d+\))?[\s-]*([\d-]*)$/;
 const nameRegExp = /^(([a-zA-Z' -]{1,80})|([а-яА-ЯЁёІіЇїҐґЄє' -]{1,80}))$/u;
 
-const ContactSchema = Yup.object().shape({
-  firstName: Yup.string()
+const contactSchema = Yup.object().shape({
+  name: Yup.string()
     .matches(nameRegExp, 'The name must contain only letters')
     .min(2, 'Too Short!')
     .required('Required!'),
-  tel: Yup.string()
+  number: Yup.string()
     .matches(phoneRegExp, 'Enter the number in the format "XXX-XX-XX"')
     .min(7, 'Too short! XXX-XX-XX')
     .max(9, 'Too long! XXX-XX-XX')
     .required('Required!'),
 });
 
-export const ContactForm = ({ onAddContact }) => {
+export const ContactForm = () => {
+  const dispatch = useDispatch();
   return (
     <Wrapper>
       <Formik
         initialValues={{
-          firstName: '',
-          tel: '',
+          name: '',
+          number: '',
         }}
-        validationSchema={ContactSchema}
+        validationSchema={contactSchema}
         onSubmit={(values, actions) => {
-          onAddContact(values);
+          dispatch(onAdd({ values }));
           actions.resetForm();
         }}
       >
         <FormContact>
-          <FormLabel htmlFor="firstName">Name</FormLabel>
-          <InputForm id="firstName" name="firstName" placeholder="" />
-          <ErrMsg name="firstName" component="div" />
+          <FormLabel htmlFor="name">Name</FormLabel>
+          <InputForm name="name" type="text" placeholder="Enter name" />
+          <ErrMsg name="name" component="div" />
 
-          <FormLabel htmlFor="tel">Number</FormLabel>
-          <InputForm id="tel" name="tel" placeholder="XXX-XX-XX" type="tel" />
-          <ErrMsg name="tel" component="div" />
+          <FormLabel>Number</FormLabel>
+          <InputForm name="number" placeholder="XXX-XX-XX" type="tel" />
+          <ErrMsg name="number" component="div" />
 
           <AddContact type="submit">Add contact</AddContact>
         </FormContact>
