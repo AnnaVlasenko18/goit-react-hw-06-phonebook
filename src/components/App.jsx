@@ -22,7 +22,7 @@ export const App = () => {
         <ContactForm />
         <TitleContact>Contacts</TitleContact>
         <Filter />
-        <ContactList contact={getVisibleContacts} />
+        <ContactList contacts={getVisibleContacts()} />
         <GlobalStyle />
       </Container>
     </Wrapper>
