@@ -1,5 +1,4 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit';
-import toast from 'react-hot-toast';
 
 const contactsSlice = createSlice({
   name: 'contacts',
@@ -16,7 +15,7 @@ const contactsSlice = createSlice({
         ({ name }) => actions.payload.values.name === name
       );
       if (existingContact) {
-        toast.error(`${actions.payload.values.name} is already in contacts`);
+        alert(`${actions.payload.values.name} is already in contacts`);
         return;
       }
       state.push({

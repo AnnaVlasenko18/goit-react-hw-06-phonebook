@@ -11,7 +11,9 @@ export const App = () => {
 
   const getVisibleContacts = () => {
     return contacts.filter(contact => {
-      return contact.name.toLocaleLowerCase().includes(filter);
+      return contact.name
+        .toLocaleLowerCase()
+        .includes(filter.toLocaleLowerCase());
     });
   };
 

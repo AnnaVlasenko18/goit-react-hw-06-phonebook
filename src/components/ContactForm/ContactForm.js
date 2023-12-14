@@ -21,8 +21,6 @@ const contactSchema = Yup.object().shape({
     .required('Required!'),
   number: Yup.string()
     .matches(phoneRegExp, 'Enter the number in the format "XXX-XX-XX"')
-    .min(7, 'Too short! XXX-XX-XX')
-    .max(9, 'Too long! XXX-XX-XX')
     .required('Required!'),
 });
 
